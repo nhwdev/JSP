@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!-- /src/main/webapp/ex03_parameter/client.html -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>client</title>
+</head>
+<body>
+	<h3>Get 방식 전송</h3>
+	<div>
+	<!--
+		form 태그에 method 속성이 생략되면 Get 방식
+		get 방식 : url 정보에 파라미터 값이  쿼리로 붙어서 전송. 파라미터 정보를 볼수 있음
+	-->
+		<form action="/servletstudy/GetServlet">
+			<input type="text" id="model" name="model" placeholder="모델명"><br>
+			<input type="text" name="price" placeholder="가격"><br>
+			<button type="submit">파라미터 전송</button>
+		</form>
+	</div>
+	<hr>
+	<h3>Post 방식 전송</h3>
+	<div>
+	<!--
+		form 태그에 method 속성의 값이 POST인 경우
+		-POST 방식 : 파라미터 값이 html의 body 부분에 추가되어 전송. 파라미터 정보를 볼수 없다. 보안↑↑
+	-->
+		<form action="/servletstudy/PostServlet" method="Post">
+			<input type="text" id="model" name="model" placeholder="모델명"><br>
+			<input type="text" name="price" placeholder="가격"><br>
+			<button type="submit">파라미터 전송</button>
+		</form>
+	</div>
+</body>
+</html>
