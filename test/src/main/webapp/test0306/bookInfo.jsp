@@ -1,0 +1,47 @@
+<%@page import="test0306.BookDao"%>
+<%@page import="test0306.Book"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>방명록 상세 보기</title>
+<link rel="stylesheet" href="style.css" >
+</head>
+<body>
+<%
+int no = Integer.parseInt((request.getParameter("no")));
+Book book = new BookDao().view(no);
+BookDao dao = new BookDao();
+if (book != null) {
+%>
+	<div class="result-card">
+		<h2>방명록 조회</h2>
+		<table>
+			<tr><th>작성자</th><td><%=book.getWriter()%></td></tr>
+			<tr><th>제목</th><td><%=book.getTitle()%></td></tr>
+			<tr><th>내용</th><td class="content-box"><%=book.getContent()%></td></tr>
+		</table>
+		<div class="btn-group">
+			<button type="button" class="btn-list" onclick="location.href='bookList.jsp'">목록보기</button>
+			<button type="button" class="btn-edit" onclick="location.href='bookUpdateForm.jsp?no=<%=no%>'">수정하기</button>
+			<button type="button" class="btn-delete" onclick="confirmDelete('<%=no%>')">삭제하기</button>
+		</div>
+	</div>
+	<%
+    } else { 
+	    out.println("<script>alert('등록에 실패했습니다.'); history.back();</script>");
+	}
+	%>
+	<script>
+		function confirmDelete(no) {
+			if (confirm("이 게시글을 정말 삭제하시겠습니까?")) {
+				location.href = "bookdelete.jsp?no=" + no;
+			}
+		}
+	</script>
+
+</body>
+</html>
+<%%>
