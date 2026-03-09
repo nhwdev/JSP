@@ -15,7 +15,7 @@
 			<tr>
 				<td rowspan="4" valign="bottom"><img src="" width="100" height="120" id="pic"><br> <font size="1">
 												<a href="javascript:win_upload()">사진등록</a></font></td>
-				<th>아이디</th><td><input type="text" name="id"><button type="button" onclick="idhchk()">중복검색</button></td></tr>
+				<th>아이디</th><td><input type="text" name="id"><button type="button" onclick="idchk()">중복검색</button></td></tr>
 			<tr><th>비밀번호</th>
 				<td><input type="password" name="pass"></td></tr>
 			<tr><th>이름</th>
@@ -31,5 +31,21 @@
 		</table>
 	</form>
 	<script type="text/javascript" src="../js/main.js"></script>
+	<script>
+		function win_upload() {
+			let op = "width=500, height=500, left=50, top=150";
+			open("pictureForm.jsp","",op);
+		}
+		
+		function idchk(){
+			if(document.f.id.value == ''){
+				alert("아이디를 입력하세요");
+				document.f.id.focus()
+			} else {
+				let op = "width=500, height=200, left=50, top=150";
+				open("idchk.jsp?id=" + document.f.id.value, "", op);
+			}
+		}
+	</script>
 </body>
 </html>
