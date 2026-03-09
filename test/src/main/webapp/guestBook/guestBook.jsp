@@ -23,7 +23,6 @@
 	<tr><td align="center">
     	<input type="submit" value="글쓰기"></td>
     	<td><input type="button" onclick="location.href='bookList.jsp'" value="목록 보기"></td></tr>
-     
 </table></form>
 
 <script type="text/javascript">

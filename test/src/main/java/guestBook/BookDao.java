@@ -1,4 +1,4 @@
-package test0306;
+package guestBook;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +11,6 @@ import java.util.List;
 public class BookDao {
 	public int insert(Book book) { // mem : 화면 입력 데이터
 		Connection conn = DBConnection.getConnection();
-		int generateNo = 0;
 		PreparedStatement pstmt = null;
 		String sql = "insert into guestbook (writer, title, content, regdate) values (?, ?, ?, now())";
 
@@ -23,14 +22,14 @@ public class BookDao {
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
-				generateNo = rs.getInt(1);
+				return  rs.getInt(1);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally { // 정상, 오류 모두 실행되는 블럭. return 을 만나도 실행
 			DBConnection.close(conn, pstmt, null);
 		}
-		return generateNo;
+		return 0;
 	}
 
 	public Book view(int no) {
@@ -96,5 +95,19 @@ public class BookDao {
 			DBConnection.close(conn, pstmt, null);
 		}
 		return books;
+	}
+	
+	public void delete(String no) {
+		Connection conn = DBConnection.getConnection();
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("delete from guestbook where no=?");
+			pstmt.setString(1, no);
+			pstmt.executeLargeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.close(conn, pstmt, null);
+		}
 	}
 }

@@ -1,5 +1,5 @@
-<%@page import="test0306.BookDao"%>
-<%@page import="test0306.Book"%>
+<%@page import="guestBook.BookDao"%>
+<%@page import="guestBook.Book"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -31,17 +31,16 @@ if (book != null) {
 	</div>
 	<%
     } else { 
-	    out.println("<script>alert('등록에 실패했습니다.'); history.back();</script>");
+	    out.println("<script>alert('해당 글이 없습니다.'); history.back();</script>");
 	}
 	%>
 	<script>
 		function confirmDelete(no) {
 			if (confirm("이 게시글을 정말 삭제하시겠습니까?")) {
-				location.href = "bookdelete.jsp?no=" + no;
+				location.href = "bookDelete.jsp?no=" + no;
 			}
 		}
 	</script>
-
 </body>
 </html>
 <%%>

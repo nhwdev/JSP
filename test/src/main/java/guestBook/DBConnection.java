@@ -1,4 +1,4 @@
-package test0305;
+package guestBook;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,4 +1,4 @@
-package test0306;
+package guestBook;
 
 public class Book {
 	private int no;
