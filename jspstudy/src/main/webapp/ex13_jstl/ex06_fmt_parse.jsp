@@ -15,7 +15,7 @@
 			<fmt:formatDate ...> : Date 객체 → 형식화된 문자열로 변경
 		parse() : 형식화 된 문자열 → 원래의 객체
 			<fmt:parseNumber ...> : 형식화된 문자열 → 숫자
-			<fmt:parseDate ...> : Date 객체 → 형식화된 문자열로 변경ㅇ
+			<fmt:parseDate ...> : 형식화된 문자열 → Date 객체
 	--%>
 	<h3>Format 된 숫자를 기본 숫자로 변경</h3>
 	<h4>var 속성이 있는 경우 : 화면에 출력 ❌</h4>
@@ -34,5 +34,13 @@
 	<fmt:formatNumber value="${num2}" pattern="##,###" var="snum2"/>
 	<fmt:formatNumber value="${num1 + num2}" pattern="##,###" var="snum3"/>
 	${snum1} + ${snum2} = ${snum3} <br>
+	<hr>
+	<h3>Format 된 날짜를 날짜형으로 변경하기</h3>
+	<fmt:parseDate value="2026-12-25 12:00:00" pattern="yyyy-MM-dd HH:mm:ss" var="day"/>
+	${day}<br>
+	<fmt:parseDate value="2026-12-25 12:00:00" pattern="yyyy-MM-dd HH:mm:ss"/><br>
+	<h3>day 변수를 이용하여 2026-12-26 금요일 출력하기</h3>
+	<fmt:parseDate value="2026-12-26" pattern="yyyy-MM-dd" var="day"/>
+	<fmt:formatDate value="${day}" pattern="yyyy-MM-dd E요일"/><br>
 </body>
 </html>
