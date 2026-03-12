@@ -3,7 +3,7 @@
 <%--
    방명록 등록하기
    1. 데이터베이스에 book 테이블 생성하기
-   2. bookwrite.jsp에서 book 테이블에 입력된 내용을 등록하고 결과를 화면에 출력하기
+   2. bookwrite.jsp 에서 book 테이블에 입력된 내용을 등록하고 결과를 화면에 출력하기
  --%>    
 <!DOCTYPE html>
 <html>
@@ -23,8 +23,8 @@
 	<tr><td align="center">
     	<input type="submit" value="글쓰기"></td>
     	<td><input type="button" onclick="location.href='bookList.jsp'" value="목록 보기"></td></tr>
-</table></form>
-
+</table>
+</form>
 <script type="text/javascript">
    function inputcheck(f) {
        if(f.writer.value == '') {
@@ -45,6 +45,5 @@
        return true;
    }
 </script>
-
 </body>
 </html>
