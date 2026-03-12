@@ -15,6 +15,9 @@ public class Member {
 	
 	// getters & setters, toString
 	
+	/*
+	 * getId() : Get 프로퍼티. 프로퍼티 : id
+	 */
 	public String getId() {
 		return id;
 	}

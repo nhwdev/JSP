@@ -171,4 +171,20 @@ public class MemberDao {
 		return null;
 	}
 	
+	public boolean updatePW(String id, String pass) {
+		Connection conn =DBConnection.getConnection();
+		PreparedStatement pstmt = null;
+		String sql = "update member set pass=? where id=?";
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, pass);
+			pstmt.setString(2, id);
+			return pstmt.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.close(conn, pstmt, null);
+		}
+		return false;
+	}
 }
