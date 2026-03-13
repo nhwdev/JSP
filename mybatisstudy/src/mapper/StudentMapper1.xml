@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- /mybatisstudy/src/mapper/MemberMapper1.xml -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="student">
+	<insert id="insert" parameterType="Student">
+		insert into student(studno, name, id, jumin, grade, major1)
+		values (#{studno}, #{name}, #{id}, #{jumin}, #{grade}, #{major1})
+	</insert>
+	<select id="selectNo" resultType="Student" parameterType="int">
+		select * from student where studno=#{value}
+	</select>
+	<update id="update" parameterType="student">
+		update student 
+		set grade=#{grade}, weight=#{weight}, height=#{height}, profno=#{profno}
+		where studno=#{studno}
+	</update>
+	<delete id="delete" parameterType="int">
+		delete from student
+		where studno=#{value}
+	</delete>
+</mapper>

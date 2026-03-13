@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- /mybatisstudy/src/mapper/MemberMapper1.xml -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="student2">
+	<select id="select1" resultType="Student" parameterType="int">
+		select * from student
+		<where>
+			<if test="grade != null">grade=#{grade}</if>
+			<if test="studno != null">studno=#{studno}</if>
+			<if test="height != null">height>=#{height}</if>
+		</where>
+	</select>
+	<!-- 동적 태그
+	1. map = null
+		select * from student 실행 → 실행됨
+	2. map = (grade, 1)
+		select * from student garde= #{grade} → 실행됨
+	3. map = (studno, 972001)
+		select * from student where studno=${studno} → 실행됨
+	4. map = (height, 180)
+		select * from student where height >= #{height} → 실행됨
+	5. map = (grade, 1) (height, 180)
+		select * from student where grade=#{grade} height>=#{height} → 실행 오류 ㅇ
+	-->
+	<select id="select2" resultType="Student" parameterType="map">
+		select * from student
+		<where>
+			<choose>
+				<when test="grade != null and height != null">
+					grade=#{grade} and height>=#{height}
+				</when>
+				<when test="grade != null">grade=#{grade}</when>
+				<when test="studno != null">studno=#{studno}</when>
+				<when test="height != null">height>=#{height}</when>
+			</choose>
+		</where>
+	</select>
+	
+	<select id="select3" resultType="Student" parameterType="map">
+		select * from student
+		<trim prefix="where" prefixOverrides="AND || OR">
+			<if test="grade != null">and grade=#{grade}</if>
+			<if test="studno != null">and studno=#{studno}</if>
+			<if test="height != null">and height>=#{height}</if>
+		</trim>
+	</select>
+	<!--
+	1. map = null
+		select * from student → 실행⭕
+	2. map = ("grde", 1)
+		select * from student and grade=#{grade} → 실행⭕		
+	3. map = ("studno", "972001")
+		select * from student where studno=#{studno} → 실행⭕
+	4. map = ("height", 180)
+		select * from student where height>=${height} → 실행⭕
+	5. map = ("height", 180), ("grade", 1)
+		select * from student where height>=#{height} and grade=#{grade} → 실행⭕
+	6. map = {"height", 180), ("grade", 1), ("studno", "981213")
+		select * from student whrer height>=#{height} and grade=#{grade} and studno=#{studno} → 실행⭕⭕
+	-->
+ 	<select id="select4" parameterType="map" resultType="Student">
+ 		select * from student
+ 		<if test="datas != null">
+ 			where ${column} in
+ 				<foreach collection="datas" item="d" separator="," open="(" close=")">#{d}</foreach>
+ 		</if>
+ 	</select>
+ 	<!--
+ 	1. map = {"column" : "major1", "datas" : [101, 201, 301]}
+ 		select * from student where major1 in (101, 201, 301) → 실행⭕
+ 	2. map = {"column" : "weight", "datas" : [75, 80, 85]}
+ 		select * from student where weight in (75, 80, 85) → 실행⭕→
+ 	-->
+</mapper>
