@@ -38,21 +38,21 @@ public class Test1 {
 	public static void main(String[] args) {
 		SqlSession session = sqlMap.openSession();
 		// 1. 학생 테이블의 등록된 레코드의 건수를 출력하기
-		System.out.println("학생 테이블의 등록된 레코드 수: " + session.selectOne("test0313.Test1.1"));
+		System.out.println("1. 학생 테이블의 등록된 레코드 수: " + session.selectOne("test0313.Test1.1"));
 		// 2. 학생 테이블의 등록된 레코드의 정보를 출력하기
 		List<Student> list = session.selectList("test0313.Test1.2");
-		System.out.println("학생 테이블의 등록된 레코드의 정보 : ");
+		System.out.println("2. 학생 테이블의 등록된 레코드의 정보 : ");
 		for (Student s : list)
 			System.out.println(s);
 		// 3. 학생 테이블의 등록된 레코드의 1학년 학생의 정보를 출력하기
 		list = session.selectList("test0313.Test1.3", "1");
-		System.out.println("학생 테이블의 등록된 레코드의 1학년 학생 정보 : ");
+		System.out.println("3. 학생 테이블의 등록된 레코드의 1학년 학생 정보 : ");
 		for (Student s : list) {
 			System.out.println(s);
 		}
 		// 4. 학생 테이블의 등록된 레코드의 성이 김씨인 학생의 정보를 출력하기
 		list = session.selectList("test0313.Test1.4", "김");
-		System.out.println("학생 테이블의 등록된 레코드의 성이 김씨인 학생 정보 : ");
+		System.out.println("4. 학생 테이블의 등록된 레코드의 성이 김씨인 학생 정보 : ");
 		for (Student s : list) {
 			System.out.println(s);
 		}
@@ -61,7 +61,7 @@ public class Test1 {
 		map.put("grade", "3");
 		map.put("jumin", "2");
 		list = session.selectList("test0313.Test1.5", map);
-		System.out.println("학생 테이블의 등록된 레코드의 3학년 학생 중 주민번호 기준 여학생 정보 : ");
+		System.out.println("5. 학생 테이블의 등록된 레코드의 3학년 학생 중 주민번호 기준 여학생 정보 : ");
 		for (Student s : list) {
 			System.out.println(s);
 		}

@@ -2,22 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test0313.Test1">
+	<!-- 1. 학생 테이블의 등록된 레코드의 건수를 출력하기 -->
 	<select id="1" resultType="int">
 		select count(*) from student
 	</select>
-	
+	<!-- 2. 학생 테이블의 등록된 레코드의 정보를 출력하기 -->
 	<select id="2" resultType="Student">
 		select * from student
 	</select>
-	
+	<!-- 3. 학생 테이블의 등록된 레코드의 1학년 학생의 정보를 출력하기 -->
 	<select id="3" resultType="Student">
 		select * from student where grade=#{value}
 	</select>
-	
+	<!-- 4. 학생 테이블의 등록된 레코드의 성이 김씨인 학생의 정보를 출력하기 -->
 	<select id="4" resultType="Student" parameterType="String">
 		select * from student where name like concat('%', #{value}, '%')
 	</select>
-
+	<!-- 5. 학생 테이블의 등록된 레코드의 3학년 학생 중 주민번호 기준 여학생 정보를 출력하기 -->
 	<select id='5' resultType="Student" parameterType="Map">
 		select * from student
 			<where>
