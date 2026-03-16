@@ -1,23 +1,35 @@
 package model;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class DBConnection {
-	private DBConnection() {
-	}
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-	public static Connection getConnection() {
-		Connection conn = null;
+public class DBConnection {
+	private DBConnection() {}
+	private static SqlSessionFactory sqlMap;
+	static {
+		String resource = "model/mapper/mybatis-config.xml";
+		InputStream input = null;
 		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/jspdb", "user", "4986");
-		} catch (Exception e) {
+			input = Resources.getResourceAsStream(resource);
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
-		return conn;
+		sqlMap = new SqlSessionFactoryBuilder().build(input);
+	}
+	public static SqlSession getConnection() {
+		return sqlMap.openSession();
+	}
+	public static void close(SqlSession session) {
+		session.commit();
+		session.close();
 	}
 
 	public static void close(Connection conn, Statement stmt, ResultSet rs) {
