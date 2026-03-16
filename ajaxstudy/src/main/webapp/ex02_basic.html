@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>GET/POST</title>
+</head>
+<body>
+	<form name="f">
+		<input type="text" name="name">
+	</form>
+	<button type="button" onclick="loadJspGet()">입력(get)</button>
+	<button type="button" onclick="loadJspPost()">입력(post)</button>
+	<div id="demo"></div>
+	<script type="text/javascript">
+		function loadJspGet() {
+			const xhttp = new XMLHttpRequest();
+			const param = "?name=" + document.f.name.value;
+			xhttp.open("GET", "ex02_basic.jsp" + param); // GET 방식 요청시 url에 파라미터를 붙여서 서버로 전송
+			xhttp.send();
+			xhttp.onreadystatechange = callback; // callback 함수 등록. callback() 함수 호출
+		}
+		function loadJspPost() {
+			const xhttp = new XMLHttpRequest();
+			const param = "name=" + document.f.name.value;
+			xhttp.open("POST", "ex02_basic.jsp");
+			// POST 방식으로 파라미터 전송시 헤더 정보 설정 필요. GET방식에서도 상관 없음.
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+			xhttp.send(param); // POST 방식 요청시 send시 파라미터를 서버로 전송
+			xhttp.onreadystatechange = callback;
+		}
+		function callback() {
+			if (this.readyState == 4 && this.status == 200) {
+				alert(this.responseText);
+				document.querySelector("#demo").innerHTML = this.responseText;
+			}
+		}
+	</script>
+</body>
+</html>
