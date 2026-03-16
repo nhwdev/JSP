@@ -1,113 +1,69 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
+import org.apache.ibatis.session.SqlSession;
+import model.mapper.GuestBookMapper;
 
 public class BookDao {
-	public int insert(Book book) { // mem : 화면 입력 데이터
-		Connection conn = DBConnection.getConnection();
-		PreparedStatement pstmt = null;
-		String sql = "insert into guestbook (writer, title, content, regdate) values (?, ?, ?, now())";
+	private final Class<GuestBookMapper> cls = GuestBookMapper.class;
+
+	public int insert(Book book) {
+		SqlSession session = DBConnection.getConnection();
 
 		try {
-			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			pstmt.setString(1, book.getWriter());
-			pstmt.setString(2, book.getTitle());
-			pstmt.setString(3, book.getContent());
-			pstmt.executeUpdate();
-			ResultSet rs = pstmt.getGeneratedKeys();
-			if (rs.next()) {
-				return  rs.getInt(1);
-			}
-		} catch (SQLException e) {
+			session.getMapper(cls).insert(book);
+			return book.getNo();
+		} catch (Exception e) {
 			e.printStackTrace();
-		} finally { // 정상, 오류 모두 실행되는 블럭. return 을 만나도 실행
-			DBConnection.close(conn, pstmt, null);
+		} finally {
+			DBConnection.close(session);
 		}
 		return 0;
 	}
 
 	public Book view(int no) {
-		Connection conn = DBConnection.getConnection();
-		PreparedStatement pstmt = null;
+		SqlSession session = DBConnection.getConnection();
 		try {
-			pstmt = conn.prepareStatement("select * from guestbook where no=?");
-			pstmt.setInt(1, no);
-			ResultSet rs = pstmt.executeQuery();
-			if (rs.next()) {
-				Book book = new Book();
-				book.setNo(rs.getInt("no"));
-				book.setContent(rs.getString("content"));
-				book.setRegdate(rs.getString("regdate"));
-				book.setTitle(rs.getString("title"));
-				book.setWriter(rs.getString("writer"));
-				return book;
-			}
-		} catch (SQLException e) {
+			return session.getMapper(cls).view(no);
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBConnection.close(conn, pstmt, null);
+			DBConnection.close(session);
 		}
 		return null;
 	}
 
 	public void update(Book book) {
-		Connection conn = DBConnection.getConnection();
-		PreparedStatement pstmt = null;
+		SqlSession session = DBConnection.getConnection();
 		try {
-			pstmt = conn.prepareStatement("update guestbook set content=?, title=?, writer=? where no=?");
-			pstmt.setString(1, book.getContent());
-			pstmt.setString(2, book.getTitle());
-			pstmt.setString(3, book.getWriter());
-			pstmt.setInt(4, book.getNo());
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
+			session.getMapper(cls).update(book);
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBConnection.close(conn, pstmt, null);
+			DBConnection.close(session);
 		}
 	}
 
 	public List<Book> list() {
-		List<Book> books = new ArrayList<>();
-		Connection conn = DBConnection.getConnection();
-		PreparedStatement pstmt = null;
+		SqlSession session = DBConnection.getConnection();
 		try {
-			pstmt = conn.prepareStatement("select * from guestbook order by no desc");
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
-				Book book = new Book();
-				book.setNo(rs.getInt("no"));
-				book.setWriter(rs.getString("writer"));
-				book.setTitle(rs.getString("title"));
-				book.setContent(rs.getString("content"));
-				book.setRegdate(rs.getString("regdate"));
-				books.add(book);
-			}
-		} catch (SQLException e) {
+			return session.getMapper(cls).list();
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBConnection.close(conn, pstmt, null);
+			DBConnection.close(session);
 		}
-		return books;
+		return null;
 	}
-	
+
 	public void delete(String no) {
-		Connection conn = DBConnection.getConnection();
-		PreparedStatement pstmt = null;
+		SqlSession session = DBConnection.getConnection();
 		try {
-			pstmt = conn.prepareStatement("delete from guestbook where no=?");
-			pstmt.setString(1, no);
-			pstmt.executeLargeUpdate();
-		} catch (SQLException e) {
+			session.getMapper(cls).delete(no);
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBConnection.close(conn, pstmt, null);
+			DBConnection.close(session);
 		}
 	}
 }
