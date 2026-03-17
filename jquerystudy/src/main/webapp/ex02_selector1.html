@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Selector</title>
+</head>
+<body>
+	<h3>아이디 선택자</h3>
+	<h1 id="id1">테스트1</h1>
+	<h1 id="id2">테스트2</h1>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		// 자바스크립트
+		window.onload = function() {
+			// id="id1"인 태그의 글자색을 빨강, 내용 "h1변경"으로 내용 변경
+			document.querySelector("#id1").style.color = "red"
+			document.querySelector("#id1").innerHTML = "h1변경"
+			console.log(document.querySelector("#id1"))
+			console.log(document.getElementById("id1"))
+		}
+		// jQuery
+		$(function() {
+			// id="id1"인 태그의 글자색을 빨강, 내용 "h1변경"으로 내용 변경
+			$("#id2").css("color", "red")
+			$("#id2").html("h1변경")
+			console.log($("#id2"))
+		})
+	</script>
+	<h3>태그 선택자</h3>
+	<p>java</p>
+	<p>MariDb</p>
+	<p>HTML</p>
+	<h5>CSS</h5>
+	<h5>JavaScript</h5>
+	<h5>jQuery</h5>
+	<script type="text/javascript">
+		$(function() {
+			//p 태그의 글자색을 pink로 변경
+			const parr = document.getElementsByTagName("p");
+			for (let i = 0; i < parr.length; i++) {
+				parr[i].style.color = "pink"
+			}
+			// jQuery 방식으로 h5 태그의 글자색을 파란색으로 변경
+			$("h5").css("color", "blue")
+			// jQuery를 이용하여, p, h5, #id1태그의 배경색을 yellow로 변경
+			$("p, h5, #id1").css("backgroundColor","yellow")
+		})
+	</script>
+	<hr>
+	<h3>클래스 선택자</h3>
+	<h1 class="item">Class 1</h1>
+	<h1 class="item select">Class 2</h1>
+	<h1 class="item select">Class 3</h1>
+	<script type="text/javascript">
+	$(function(){
+		const itemarr = document.getElementsByClassName("item")
+		for(let i=0; i<itemarr.length; i++){
+			itemarr[i].style.color = "orange"
+			itemarr[i].onclick=function(){
+				console.log("클릭됨")
+			}
+		}	
+		
+		// jQuery 방식으로 select 클래스 속성 값의 태그를 배경색을 pink로 변경. 클릭됨이 출력되도록 이벤트 등록하기
+		$(".select").css("backgroundColor","pink").click(function() {
+			console.log("클릭됨-select")
+		})	
+	})
+	</script>
+</body>
+</html>

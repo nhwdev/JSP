@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--  /webapp/ex04_selector3.html -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Selector</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+ <h3>* 상태(checked, selected, enabled, disabled) 선택자</h3>
+ <h4>- checked 상태 선택자 (radio, checkbox)</h4>
+    취미 : <input type="checkbox" name="hobby" value="game"> 
+    <label>게임</label>
+    <input type="checkbox" name="hobby" value="movie">
+    <label>영화</label>
+    <input type="checkbox" name="hobby" value="music">
+    <label>음악</label>
+    <br>
+    <button id="btn" type="button">실행확인</button>
+<script>
+	// 실행확인 버튼 클릭시 checked 상태인 요소를 선택하여 크기 변경하기
+	$("#btn").click(function() { // 이벤트 핸들러
+		$("input:checked").css({width:"50px", height:"50px"})
+	})
+	// checkbox의 값이 변경되는 경우 label의 글자크기를 변경, 속성값이 없으면 원래대로 처리
+	// change() : 값이 변경되는 경우 발생되는 이벤트 함수
+	$(":checkbox").change(function() {
+		// $(this) : 이벤트소스. 이벤트를 발생한 checkbox 태그
+		if($(this).prop("checked")){ // checked 된 상태
+			$(this).css({width:"50px", height:"50px"})
+			// $(this).next() : 다음 태그. label 태그
+			// 2em : 기본 폰트 2배로. 상대 단위
+			$(this).next().css("font-size","2em")
+		} else { // checked 안된 상태			
+			$(this).css({width:"", height:""}) // 기본크기
+			$(this).next().css("font-size","")
+		}
+		// .attr 초기 상태값
+		// .prop 바뀔수 있는 상태값
+	})
+</script>
+<hr>
+<h4>- selected 상태 선택자 (select>option)</h4>
+    국적 : 
+    <select name="national">
+        <option value="x">선택안함</option>
+        <option value="ko">한국</option>
+        <option value="us">미국</option>
+        <option value="eu">영국</option>
+    </select>
+    <button type="button" onclick="test();">확인</button>
+    <br>
+    선택한 나라 : <span id="result">선택안함</span>
+    <script>
+    // 확인 버튼 클릭시 선택된 option 값을 #result에 출력하기
+    // option:selected : option 태그 중 selected 된 태그
+    function test() {
+    	$("#result").html($("option:selected").html() + ", " + $("option:selected").val())
+    }
+    </script>
+    <hr>
+    <h4>- disabled, enabled 상태 선택자 (input 요소들, button 등)</h4>
+    <button type="button">활성화버튼</button>
+    <button type="button" disabled>비활성화버튼</button>
+    <script>
+    	$("button:enabled").css("backgroundColor", "yellowgreen")   
+    	$("button:disabled").css("backgroundColor", "orange")
+    </script>
+</body>
+</html>

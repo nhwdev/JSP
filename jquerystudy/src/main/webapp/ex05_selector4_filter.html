@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--  ex05_selector4_filter.html  -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Selector_filter</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <h3>* 필터링 관련 선택자</h3>
+    <!-- 5행 3열 -->
+    <table border="1">
+        <tr><th>이름</th><th>혈액형</th><th>거주지</th></tr>
+        <tr><td>홍길동</td><td>A형</td><td>서울</td></tr>
+        <tr><td>김영희</td><td>B형</td><td>경기도</td></tr>
+        <tr><td>김삼순</td><td>O형</td><td>부산</td></tr>
+        <tr><th colspan="2">총 인원</th><td>3명</td>
+        </tr>
+    </table>
+    <script>
+        $(function(){
+        	// tr 태그 중 짝수 인덱스에 해당하는 태그의 배경색을 lightgray로 변경. 0번 인덱스 부터 시작
+        	$("tr:even").css("backgroundColor", "lightgray")
+        	// tr 태그 중 홀수 인덱스에 해당하는 태그의 배경색을 yellow로 변경
+        	$("tr:odd").css("backgroundColor", "yellow")
+        	// tr 태그 중 1번째 태그는 검정바탕에 흰 글씨로 변경
+        	$("tr:first").css("backgroundColor", "black").css("color", "white")
+        	$("tr:last").css({backgroundColor:"red", color:"white"})
+        })
+    </script>
+    <h3>* 필터링 관련 메소드</h3>
+    <p>
+        기준이되는 요소 중에서 특정 요소만을 걸러서 선택해주는 메소드(선택된 요소 반환) <br>
+        first(), last(), filter(), eq(), not(), even(), odd()
+    </p>
+
+    <h4 class="test">test-1</h4>
+    <h4 class="test">test-2</h4>
+    <h4 class="test">test-3</h4>
+    <h4 class="test">test-4</h4>
+    <h4>test-5</h4>
+    <h4 class="test">test-6</h4> 
+    <script>
+        $(function(){
+        	// h4 태그 중 1번째 태그의 글자 크기를 20px로 변경
+        	// $("h4:first").css("font-size","20px")
+        	$("h4").first().css("font-size", "20px")
+        	// h4 태그 중 마지막 태그의 글자 크기를 30px로 변경
+        	$("h4").last().css("font-size", "30px")
+        	// filter(선택자) : 해당하는 태그 선택
+        	// $("h4.test")
+        	$("h4").filter(".test").html("<font color='red'>텍스트 변경</font>")
+        	// not(선택자) : 선택자가 아닌 태그 선택
+        	$("h4").not(".test").css("color", "blue")
+        	// eq(인덱스) : 여러개의 태그 중 인덱스에 해당하는 태그 선택
+        	// eq(3) : 4번째 태그
+        	// html() : innerHTML 관련 함수. 입출력
+        	// text() : innerText 관련 함수. 일반문자로 인식
+        	$("h4").eq(3).html("<font color='red'>eq로 선택</font>")
+        	// even: 짝수 인덱스, odd: 홀수 인덱스
+        	// h4 태그중 짝수인덱스의 태그는 배경색:green, 홀수 인덱스의 태그: 배경색: yellow
+        	$("h4").even().css("backgroundColor","green")
+        	$("h4").odd().css("backgroundColor","yellow")
+        })
+    </script>  
+    <h6>
+        h3태그의 홀수번째(짝수인덱스)를 노랑바탕에 파란글씨,짝수번째(홀수인덱스) 검정바탕에 노랑글씨로 설정
+    </h6> 
+    <h3>H3:Header_0</h3><h3>H3:Header_1</h3><h3>H3:Header_2</h3>
+    <h3>H3:Header_3</h3><h3>H3:Header_4</h3><h3>H3:Header_5</h3>
+    <script>
+    	// $("h3:even").css({color:"blue", backgroundColor:"yellow"})
+    	// $("h3:odd").css({color:"yellow", backgroundColor:"black"})
+    	$("h3").even().css({color:"blue", backgroundColor:"yellow"})
+    	$("h3").odd().css({color:"yellow", backgroundColor:"black"})
+    </script>
+    <hr>
+    <h6>
+        h1 태그 중 3의 배수인 경우 검정 바탕에 흰글씨로, 
+        3배수의 나머지가 1 경우 노랑 바탕에 파랑글씨로 
+        3배수의 나머지가 2 경우 파랑바탕에 노랑글씨 설정하기 
+    </h6>
+    <p>nth-child(3n+1) : 태그의 종류에 상관없이 갯수 설정. 순서로 처리. 1번부터 시작 <br>
+       nth-of-type(3n) : 태그 종류 별 갯수 설정. 순서로 처리. 1번부터 시작</p>
+    <h1>H1:Header_0</h1><h1>H1:Header_1</h1><h2>H2:Header_2</h2>
+    <h1>H1:Header_3</h1><h1>H1:Header_4</h1><h2>H2:Header_5</h2>
+    <h1>H1:Header_6</h1><h1>H1:Header_7</h1><h2>H2:Header_8</h2>
+    <script>
+    	// $("h1:nth-child(3n)").css({"background":"black", "color":"white"})
+    	// $("h1:nth-child(3n+1)").css({"background":"yellow", "color":"blut"})
+    	// $("h1:nth-child(3n+2)").css({"background":"blue", "color":"yellow"})
+    	 $("h1:nth-of-type(3n)").css({"background":"black", "color":"white"})
+    	 $("h1:nth-of-type(3n+1)").css({"background":"yellow", "color":"blut"})
+    	 $("h1:nth-of-type(3n+2)").css({"background":"blue", "color":"yellow"})
+    	 // h2 태그의 바탕색을 red, orange, yello 으로 설정
+    	 // $("h2").eq(0).css("backgroundColor", "red")
+    	 // $("h2").eq(1).css("backgroundColor", "orange")
+    	 // $("h2").eq(2).css("backgroundColor", "yellow")
+    	 $("h2:eq(0)").css("backgroundColor", "red")
+    	 $("h2:eq(1)").css("backgroundColor", "orange")
+    	 $("h2:eq(2)").css("backgroundColor", "yellow")
+    </script>
+</body>
+</html>
