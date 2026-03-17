@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>fetch 함수</title>
+</head>
+<body>
+	<h2>fetch 함수를 이용한 요청</h2>
+	<button type="button" onclick="loadjsp()">요청</button>
+	<div id="demo"></div>
+	<script type="text/javascript">
+	/*
+	* fetch : Promise 기반 객체. 서버와 비동기 통신을 할 수 있는 메서드
+	*
+	*
+	* Promise 기반 객체 : 미래의 어느 시점에 결과 주는 객체
+	*/
+		function loadjsp() {
+			fetch("ex01_basic.jsp") // ex01_basic.jsp 요청
+			.then((response)=>response.text()) // 응답 성공. response : 서버의 응답 객체
+											   // response.text() : 서버에서 전달 받은 응답 데이터
+			.then((data)=>document.querySelector("#demo").innerHTML = data) // data : response.text() 
+		}
+	</script>
+</body>
+</html>
