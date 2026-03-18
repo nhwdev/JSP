@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Event</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>
+        <a href="https://www.google.com">구글</a>
+    </h1>
+    <h1>Header 1</h1>
+    <script type="text/javascript">
+        $("h1").click(function(){
+            $(this).css("backgroundColor", "red")
+        })
+        $("a").click(function(event){
+            $(this.css("backgroundColor", "blue"))
+            event.preventDefault() // 기본이벤트 취소
+            event.stopPropagation() // 이벤트의 전파 방지: 부모태그의 이벤트 취소
+            return false // 기본 이벤트 취소 + 이벤트 전파 방지
+        })
+    </script>
+</body>
+</html>

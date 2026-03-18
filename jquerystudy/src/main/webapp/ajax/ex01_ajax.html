@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta charset="UTF-8">
+<title>AJAX</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>   
+</head>
+<body>
+	<button id="btn1">ex01_ajax1.jsp</button>
+    <button id="rmbtn1">ex01_ajax1.jsp 로 추가된 요소 제거 (h1태그 제거)</button>
+    <script type="text/javascript">
+        $("#btn1").click(function(){
+            /* 
+             * $.ajax(url, {success: 정상 처리 된 경우 실행, error: 오류 발생 시 실행}) : jQuery를 이용한 
+             */
+            $.ajax("ex01_ajax1.jsp",{
+                success : function(data) { // data : <h1>jQuery Ajax 첫번째 연습</h1>
+                    $("body").append(data)
+                },
+                error : function(e) {
+                    alert("서버 오류: " + e.status)
+                }
+            })
+        })
+        $("#rmbtn1").click(function(){
+            // $("h1:last").remove()
+            // $("h1").eq(0).remove() // 첫번째 h1 태그 제거
+            // $("h1").eq(-1).remove() // 마지막 h1 태그 제거, -1 : 뒤에서 1번째
+            $($("h1").get(-1)).remove() // 마지막 h1 태그 제거. -1 : 뒤에서 첫번째.
+        })
+    </script>
+    <hr>
+    <button id="btn2">ex01_ajax2.jsp</button>
+    <button id="rmbtn2">ex01_ajax2.jsp로 추가된 요소 제거 (h1태그 제거)</button>
+    <script type="text/javascript">
+        $("#btn2").click(function(){
+            $.ajax({
+                url : "ex01_ajax2.jsp", // 서버의 요청 페이지
+                type: "POST", // method 방식 설정 : GET(기본) | POST
+                // data: "name=홍길동&age=20", // POST 방식인 경우 파라미터 값 저장
+                data: {name:"홍길순", age:25},
+                success : function(data){ // 정상 응답
+                    $("body").append(data)
+                },
+                error : function(e){ // 오류 응답
+                    alert("서버 오류 : " + e.status)
+                }
+            })
+        })
+        $("#rmbtn2").click(function(){
+            $($("h2").get(-1)).remove() /// 마지막 h2 태그 제거. -1: 뒤에서 1번째
+        })
+    </script>
+</body>
+</html>

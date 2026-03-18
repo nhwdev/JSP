@@ -52,6 +52,22 @@
 <h1 id="test3"><span>A</span></h1>
 <h1 id="test4"><span>A</span></h1>
 <script>
+    // $(A).append(B) : A 요소 내에 뒷부분에 B를 추가 (자손 / 하위)
+    $("#test1").append("<span>B</span>")
+    // $(A).append(B) : A 요소 내에 앞부분에 B를 추가 (자손 / 하위)
+    $("#test2").prepend("<span>B</span>")
+    // $(A).before(B) : A 요소 앞부분에 B를 추가 (동위)
+    $("#test3").before("<span>B</span>")
+    // $(A).after(B) : A 요소 뒷부분에 B를 추가 (동위)
+    $("#test4").after("<span>B</span>")
+    // $(B).appendTo(A) : B를 A 요소 내에 뒷부분에 하위 요소 추가
+    $("<span>C</spna>").appendTo("#test1")
+    // $(B).rependTo(A) : B를 A 요소 내에 앞부분에 하위 요소 추가
+    $("<span>C</span>").prependTo("#test2")
+    // $(B).insertAfter(A) : B를 A 요소 뒤에 추가 (동위)
+    $("<span>C</span>").insertAfter("#test3")
+    // $(B).insertBefore("A") : B를 A 요소 앞에 추가 (동위)
+    $("<span>C</span>").insertBefore("#test4")
 </script>
 <hr>
 <h3>요소 복제 메소드</h3>
@@ -61,6 +77,22 @@
 <button id="clone">복제</button>
 <div id="clone-result"></div>
 <script>
+    $(".item").hover(function(){
+        $(this).addClass("purple") // addClass() : class 속성 추가. class="item purple" 추가
+    }, function(){
+        $(this).removeClass("purple") // removeClass() : class 속성 제거. class="item" 제거
+    })
+    $("#clone").click(function(){
+        // $("#clone-result").append($("#item1")) // 복제가 아니고 이동
+        // clone() : 요소 복제. 요소만 복제. 이벤트 복제 ❌
+        // const copyEl = $("#item1").clone() // 요소 복제 ⭕, 요소에 등록된 이벤트 복제 ❌
+        // $("#clone-result").append(copyEl)
+        // clone(true) : 요소 복제 ⭕, 요소에 등록된 이벤트 복제 ⭕
+        // $("#clone-result").append($("#item1").clone(true))
+        // appendTO 함수를 이용한 복제
+        $("#item1").clone(true).appendTo($("#clone-result"))
+        
+    })
 </script>
 <hr>
 <h1>요소 제거</h1>
@@ -74,6 +106,22 @@
 <button id="detach">잘라내기</button>
 <div id="remove-result"></div>
 <script>
+    $(".item").hover(function(){
+        $(this).addClass("purple")
+    }, function(){
+        $(this).removeClass("purple")
+    })
+    $("#empty").click(function(){
+        $("#remove-test").empty() //#remove-test 내의 모든 요소를 제거
+    })
+    $("#remove").click(function(){
+        const removeEl = $("#item2").remove() // 제거된 요소를 리턴. 이벤트 리턴 ❌
+        $("#remove-test").append(removeEl)
+    })
+    $("#ㅇㄷㅅㅁ초").click(function(){
+        const removeEl = $("#item2").detach() // 제거된 요소를 리턴. 이벤트 리턴 ⭕
+        $("#remove-test").append(removeEl)
+    })
 </script>
 </body>
 </html>

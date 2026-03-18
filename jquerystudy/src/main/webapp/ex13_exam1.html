@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!--  ex13_exam1.html -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Exam</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>    
+</head>
+<body>
+<h3>textarea 태그에 100자까지 입력하려고 함.<br>
+    글자를 입력할때 마다 #remainnum 위치에 입력가능한 글자수를 출력하기<br>
+    만약 입력한 내용이 100자 넘는 경우  빨강색음수로 출력하기<br>
+    만약 입력한 내용이 100자 안넘는 경우  파랑색 숫자로 출력하기<br>
+    keyup 함수를 이용하기<br>
+</h3>    
+<p>글쓰기</p><h1 id="remainnum">100</h1>
+<textarea rows="10" cols="70"></textarea>
+<script>
+    let num1 = $("h1").text()
+    $("textarea").keyup(function(){
+            let num2 = num1 - $(this).val().length
+            $("#remainnum").text(num2)
+            if(num2 < 0) $("h1").css("color", "red")
+            else $("h1").css("color", "blue")
+        }
+    )
+</script>
+</body>
+</html>

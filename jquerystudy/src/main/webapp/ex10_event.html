@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--  /webapp/ex10_event.html  -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Event</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>이벤트핸들러 연결 방법</h1>
+    <h3>이벤트 메소드 이용</h3>
+    <h4 id="test1">클릭해 보세요</h4>     
+    <script>
+        $("#test1").click(function(){
+            //$(this) : 이벤트 소스. traget
+            $(this).text("클릭되었습니다.");
+        })
+        $("#test1").dblclick(function(){
+            $(this).css("color", "red");
+        })
+        $("#test1").click(function(){
+            $(this).css("backgroundColor", "yellow");
+        })
+    </script>
+    <hr>
+    <h3>on 메소드 이용</h3>
+    <h4 id="test2">마우스 클릭 및 올려보세요</h4>
+    <script>
+        // $("#test2").on("mouseenter", function() {console.log("마우스 접근")})
+        // $("#test2").on("mouseout", function() {console.log("마우스 빠짐")})
+        $("#test2").on({
+            mouseenter:function(){
+                $(this).css("backgroundColor", "yellowgreen").text("마우스 접근")
+            },
+            mouseout:function(){
+                $(this).css("backgroundColor", "yellow").text("마우스 빠짐")
+            },
+            click:function(){
+                $(this)
+                .off("mouseenter") // off(이벤트 이름) : 이벤트 등록 제거
+                .off("mouseout")
+                .css("backgroundColor", "orangered")
+                .text("이벤트 제거됨")
+            }
+        })
+    </script>  
+    <h3>on 메서드 이용 2</h3>  
+    <div id="wrap">
+        <h4>h4 클릭해보시오</h4>
+        <h5>h5 클릭해보시오</h5>
+    </div> 
+    <h5>div 바깥쪽 h5</h5>   
+    <script>
+        /* 
+         * $(상위요소).on("이벤트명", "하위요소선택자", function() {})
+         */
+        $("#wrap").on("click", "h4, h5", function(){
+            $(this).html("안녕")
+        })
+        // $(document) : 문서 객체
+        $(document).on("click", "h5", function(){
+            $(this).css("color", "pink")
+        })
+    </script>    
+    <hr>
+    <h3>동적으로 생성된 요소에 이벤트 적용</h3>
+    <div id="area2" style="border:1px solid red;">
+        <h6>문서에 존재하는 h6 요소</h6>
+    </div>
+    <script>
+        // 1. 이벤트 함수를 이용한 이벤트 등록
+        // 동적으로 생성된 요소는 이벤트 등록에서 제외됨
+        $("#area2 > h6").click(function(){
+            $("#area2").append("<h6>클릭을 이용해 동적으로 만들어진 h6 요소</h6>")
+        })
+        // 2. on 함수를 이용한 이벤트 등록
+        $("#area2 > h6").on("click", function(){ // 문서에 있는 요소만 이벤트 등록됨. $("#area2 > h6")에 존재 하므로 동적요소는 동작 ❌
+            $("#area2").append("<h6>클릭을 이용해 동적으로 만들어진 h6 요소</h6>")
+        })
+        // 3. on 함수의 하위 선택자를 이용한 이벤트 등록 : 동적으로 생성된 요소도 이벤트에 등록
+        $("#area2").on("click", "h6", function(){ // #area2의 하위 객체인 h6도 이벤트 등록됨
+            $("#area2").append("<h6>클릭을 이용해 동적으로 만들어진 h6 요소</h6>")
+        })
+    </script>
+    <hr>
+    <h3>일회성 이벤트 등록 : one함수</h3>
+    <h6 id="test3">딱 한번한 실행</h6>
+    <script>
+        $("#test3").one("click", function(){
+            alert("한번 실행 후 다시 실행 안함")
+        })
+    </script>
+</body>
+</html>
