@@ -18,7 +18,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>로그인</title>
 </head>
 <body>
 <form name="f">
@@ -29,6 +29,43 @@
 </form>
 <div id="message"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
+<script type="text/javascript">
+   $("#loginbtn").click(function(){
+      let param = {id:$("#id").val(), pass:$("#pass").val()}
+      $.ajax({
+         url: "ex02_login.jsp",
+         type : "POST",
+         data : param,
+         success : function(data) {
+            $("#message").html(data)
+         },
+         error : function(e) {
+            alert("서버오류: " + e.status)
+         }
+      })
+      return false
+   })
+   $("#btn").click(function(){
+      if($("#id").val() == ""){
+         $("#message").html("아이디를 입력하세요.")
+         return;
+      }
+      let param = {id:$("#id").val()}
+      $.ajax({
+         url : "ex02_iddup.jsp",
+         type : "POST",
+         data : param,
+         success : function(data) {
+            $("#message").html(data)
+            if($("#result").is(".find")){
+               $("#id").val("")
+            }
+         },
+         error : function(e) {
+            alert("서버 오류: " + e.status)
+         }
+      })
+   })
+</script>
 </body>
 </html>
