@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+  test1.html 완성하기
+  test1.jsp 페이지 구현하기 
+ -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원이름 검색하기</title>
+<style>
+table, td, th {
+	border: solid 1px;
+}
+</style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+	<form name="f">
+		회원이름:<input type="text" name="name"> <input type="button"
+			value="검색" onclick="loadName(this.form)">
+	</form>
+	<div id="list"></div>
+	<script type="text/javascript">
+		function loadName(f) {
+			let param = "name=" + f.name.value;
+			$.ajax({
+				url : "test1.jsp",
+				type : "POST",
+				data : param,
+				success : function(data) {
+					$("#list").html(
+							"<table><tr><th>아이디</th><th>이름</th><th>전화</th><th>이메일</td><th>성별</th></tr>"
+									+ data + "</table>")
+				},
+				error : function(e) {
+					alert("서버오류 :" + e.status);
+				}
+			})
+		}
+	</script>
+</body>
+</html>

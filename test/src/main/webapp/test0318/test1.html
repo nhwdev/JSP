@@ -5,58 +5,67 @@
 -->
 <html>
 <head>
-<meta charset="UTF-8">
-<title>AJAX Test</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>AJAX Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-	<button id="btn1">XMLHttpRequest 객체</button>
-	<script type="text/javascript">
-		$("#btn1").click(
-				function() {
-					const xhttp = new XMLHttpRequest();
-					xhttp.open("POST", "test1.jsp");
-					xhttp.setRequestHeader("Content-type",
-							"application/x-www-form-urlencoded;charset=UTF-8");
-					xhttp.send();
-					xhttp.onreadystatechange = function() {
-						if (xhttp.readyState == 4 && xhttp.status == 200) {
-							let result = xhttp.responseText
-							let str = result
-							let html = str + " 중 최대값 : "
-							let arr = result.replace("[", "").replace("]", "").split(", ")
-							let max = -1
-							let min = 100
-							for (let i = 0; i < arr.length; i++) {
-								let num = Number(arr[i].trim())
-								if (max < num) {
-									max = num
-									console.log("max : " + max)
-								}
-								if (num < min) {
-									min = num
-									console.log("min : " + min)
-								}
-							}
-							html += max
-							html += "<br>" + str + " 중 최소값 : " + min
-							document.querySelector("#result").innerHTML = html
-						}
-					}
-				})
-	</script>
-	<button id="btn2">fetch 함수</button>
-	<script type="text/javascript">
-		document.querySelector("#btn2").onclick = function(){
-			fetch("test1.jsp")
-			.then((r)=>r.json())
-			.then((result)=>{
-				console.log(result)
-			})
-		}
-	</script>
-	<button id="btn3">jQuery</button>
-	<div id="result"></div>
+<button id="btn1">XMLHttpRequest 객체</button>
+<script type="text/javascript">
+    $("#btn1").click(
+        function () {
+            const xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "test1.jsp");
+            xhttp.setRequestHeader("Content-type",
+                "application/x-www-form-urlencoded;charset=UTF-8");
+            xhttp.send();
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    let result = xhttp.responseText
+                    let str = result
+                    let html = str + " 중 최대값 : "
+                    let arr = result.replace("[", "").replace("]", "").split(", ")
+                    let max = -1
+                    let min = 100
+                    for (let i = 0; i < arr.length; i++) {
+                        let num = Number(arr[i].trim())
+                        if (max < num) {
+                            max = num
+                        }
+                        if (num < min) {
+                            min = num
+                        }
+                    }
+                    html += max
+                    html += "<br>" + str + " 중 최소값 : " + min
+                    document.querySelector("#result").innerHTML = html
+                }
+            }
+        })
+</script>
+<button id="btn2">fetch 함수</button>
+<script type="text/javascript">
+    document.querySelector("#btn2").onclick = function () {
+        fetch("test1.jsp")
+            .then((r) => r.text())
+            .then((result) => {
+                let json = JSON.parse(result)
+                $("#result").html(result + " 중 최대값 : " + Math.max(...json) + "<br>" + result + " 중 최소값 : " + Math.min(...json))
+            })
+    }
+</script>
+<button id="btn3">jQuery</button>
+<script type="text/javascript">
+    $("#btn3").click(function () {
+        $.ajax({
+            url: "test1.jsp",
+            success: function (data) {
+                result = JSON.parse(data)
+                $("#result").html(data + " 중 최대값 : " + Math.max(...result) + "<br>" + data + "중 최소값 : " + Math.min(...result))
+            }
+        })
+    })
+</script>
+<div id="result"></div>
 </body>
 </html>

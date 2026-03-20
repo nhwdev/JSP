@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+   test2.html 완성하기
+   test2.jsp 페이지를 호출하여JSON 방식으로 처리하여 화면에 출력하기    
+ -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>우편번호 보기</title>
+<style>
+table, td, th {
+	border: solid 1px;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<input type="button" value="우편번호" id="btn"><br>
+<div id="result"></div>
+<script type="text/javascript">
+$("#btn").click(function(){
+		$.ajax({
+            url : "test2.jsp",   
+            success : function(data) {
+            	// JSON.parse(문자열) : 문자열을 js 객체 변환
+                let zip = JSON.parse(data);
+                let html = "<table><tr><th>우편번호</th><th>을면동</th><th>주소</th></tr>"
+                $.each(zip.ZIP, function(i, addr){
+                	html += `<tr><td>${addr.zipcode}</td><td>${addr.dong}</td><td>${addr.addr}</td></tr>`
+                })
+                html+="</table>"
+                $("#result").html(html)
+            }
+        })
+	})
+</script>
+</body>
+</html>
