@@ -29,3 +29,47 @@ Servers/
 .DS_Store
 Thumbs.db
 /.metadata/
+
+# ===== IntelliJ IDEA =====
+.idea/
+!.idea/codeStyles/
+!.idea/inspectionProfiles/
+*.iml
+*.iws
+out/
+
+# ===== Maven =====
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# ===== Gradle =====
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# ===== 환경 변수 / 시크릿 =====
+.env
+.env.local
+.env.*.local
+application-local.yml
+application-secret.yml
+*.key
+*.pem
+*.p12
+secrets.properties
+
+# ===== 운영체제 =====
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ===== 로그 / 임시 파일 =====
+*.log
+*.tmp
+*.temp
+logs/
+*.class
