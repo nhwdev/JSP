@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON</title>
+</head>
+<body>
+    <button id="btn">JSON 연습</button>
+    <div id="result"></div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$("#btn").click(function(){
+		$.ajax({
+            url : "ex06_person.jsp",   
+            success : function(data) {
+            	// JSON.parse(문자열) : 문자열을 js 객체 변환
+                let person = JSON.parse(data)
+                $.each(person, function(i, item){
+                    $("#result").append(`<ul><li>${item.name}</li>
+                                             <li>${item.gender}</li>
+                                             <li>${item.part}</li></ul>`)
+                })
+            }
+        })
+	})
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <title>자동완성</title>
+   <style type="text/css">
+      .listbox {
+         position: relative;
+         left: 10px;
+         margin: 10px;
+         width: 200px;
+         background-color: #EEEEEE;
+         color: #FF00FF;
+         border: 2px solid #000
+      }
+
+      .namelist {
+         margin: 0px;
+         padding: 0px;
+         list-style: none;
+      }
+      
+      ul {
+      	list-style: none;
+      	padding-left: 15px;
+      }
+      
+      .hover {
+         background-color: cyan;
+         color: blue;
+      }
+   </style>
+</head>
+<body>
+   <span>사용자 아이디</span>
+   <input type="text" name="id" id='id'>
+   <div class="listbox">
+      <div class="namelist"></div>
+   </div>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+   <script type="text/javascript">
+      $(".listbox").hide()
+      $("#id").keyup(function () { // 키가 올라올때 마다, 서버에 요청
+         let data = "id=" + $("#id").val() // 파라미터 값 설정
+         $.ajax({
+            url: "ex03_idlist.jsp",
+            type: "POST",
+            data: data,
+            // html : <ul> ... </ul>
+            success: function(html) {
+               $(".listbox").show() // 보이도록 설정
+               $(".namelist").html(html) // 서버에서 받은 데이터를 화면출력
+               $("li").hover(function () { // li 태그에 마우스가 올라오면
+                  $(this).addClass("hover")
+               }, function () { // li 태그에 마우스가 없어지면
+                  $(this).removeClass("hover")
+               })
+               $("li").click(function () { 
+                  $("#id").val($(this).text()) // $(this).text() : li 태그의 내용을 #id 태그의 value 값에 저장
+                  $(".listbox").hide() // 보이지 않도록
+               })
+            },
+            error: function (e) {
+               alert("서버 오류: " + e.status)
+            }
+         })
+      })
+   </script>
+</body>
+</html>

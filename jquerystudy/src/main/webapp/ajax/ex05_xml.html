@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>XML</title>
+</head>
+<body>
+    <button id="allbtn">전체구</button>
+    <button onclick="stateprint('east')">동쪽구</button>
+    <button onclick="stateprint('west')">서쪽구</button>
+    <button onclick="stateprint('south')">남쪽구</button>
+    <button onclick="stateprint('north')">북쪽구</button>
+
+    <div id="state"></div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#allbtn").click(function (){
+        $("#state").html("")
+        $.ajax("ex05_state.xml", {
+            success : function(data) {
+                $("#state").append("<ul>")
+                $(data).find("state").each(function(){
+                    // $(this) : state 태그
+                    $("#state").append(`<li>${$(this).text()}</li>`)
+                })
+                $("#state").append("</ul>")
+            },
+            error : function(e) {
+                alert("서버 오류: " + e.status)
+            }
+        })
+    })
+    function stateprint(location){
+        $("#state").html("")
+        $.ajax("ex05_state.xml", {
+            success : function(data) {
+                $("#state").append("<ul>")
+                $(data).find(location).find("state").each(function(){
+                    $("#state").append(`<li>${$(this).text()}</li>`)
+                })
+                $("#state").append("</ul>")
+            },
+            error : function(e) {
+                alert("서버 오류: " + e.status)
+            }
+        })
+    }
+</script>
+</body>
+</html>
