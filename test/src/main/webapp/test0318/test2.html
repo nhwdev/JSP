@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>fetch Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
 <h3>1. XMLHttpRequest 객체를 통해 현재 페이지에 전송받아 결과를 result1 영역에 출력하기</h3>
@@ -16,14 +17,17 @@
 <div id="result1"></div>
 <script type="text/javascript">
     function ajaxtest(data) {
+        let num1 = document.querySelector("#num1").value
         const xhttp = new XMLHttpRequest()
+        xhttp.onreadystatechange = () => {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
+                console.log(xhttp.responseText)
+                document.querySelector("#result1").innerHTML = xhttp.responseText
+            }
+        }
         xhttp.open("POST", "test2.jsp")
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8")
-        xhttp.send("num="+data)
-        xhttp.onreadystatechange = () => {
-            let result = xhttp.responseText
-            document.querySelector("#result1").innerHTML = result
-        }
+        xhttp.send("data=" + data + "&num=" + num1)
     }
 </script>
 <hr>
@@ -33,6 +37,20 @@
 <button onclick="fetchtest(1)">짝수합구하기</button>
 <button onclick="fetchtest(2)">홀수합구하기</button>
 <div id="result2"></div>
+<script type="text/javascript">
+    function fetchtest(data) {
+        let num2 = document.querySelector("#num2").value
+        fetch("test2.jsp", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+            },
+            body: "data=" + data + "&num=" + num2
+        })
+            .then(r => r.text())
+            .then(result => document.querySelector("#result2").innerHTML = result)
+    }
+</script>
 <hr>
 <h3>3.jQuery을 통해 현재 페이지에 전송받아 결과를 result3 영역에 출력하기</h3>
 숫자 : <input type="text" id="num3"><br>
@@ -40,5 +58,21 @@
 <button onclick="jquerytest(1)">짝수합구하기</button>
 <button onclick="jquerytest(2)">홀수합구하기</button>
 <div id="result3"></div>
+<script type="text/javascript">
+    function jquerytest(data) {
+        let num3 = document.querySelector("#num3").value
+        $.ajax({
+            url: "test2.jsp",
+            method: "POST",
+            data: {
+                data: data,
+                num: num3
+            },
+            success: result => {
+                $("#result3").html(result)
+            }
+        })
+    }
+</script>
 </body>
 </html>
