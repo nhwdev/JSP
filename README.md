@@ -28,8 +28,7 @@ JSP/
 ├── 📁 mybatisstudy/         # MyBatis ORM 프레임워크
 ├── 📁 jquerystudy/          # jQuery 기초 및 DOM 조작
 ├── 📁 ajaxstudy/            # Asynchronous JavaScript And XML
-├── 📁 jsoupstudy/           # jsoup HTML 파싱
-└── 📁 guestbook/            # MVC Model 2 실전 프로젝트
+└── 📁 jsoupstudy/           # jsoup HTML 파싱
 ```
 
 <br>
@@ -46,4 +45,3 @@ JSP/
 | 6 | `jquerystudy` | jQuery | 선택자, 이벤트, DOM 조작 |
 | 7 | `ajaxstudy` | AJAX | XMLHttpRequest, fetch, 비동기 처리 |
 | 8 | `jsoupstudy` | jsoup | HTML 파싱, 웹 크롤링 |
-| 🏁 | `guestbook` | 실전 프로젝트 | MVC Model2 기반 방명록 CRUD |
