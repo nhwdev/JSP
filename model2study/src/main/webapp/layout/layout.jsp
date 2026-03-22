@@ -18,7 +18,8 @@
 </head>
 <body>
 	<table>
-		<tr><td colspan="3" style="text-align: right">
+		<tr><td id="getimg"></td>
+			<td colspan="2" style="text-align: right">
 				<c:if test="${empty sessionScope.login}">
 					<a href="${path}/member/loginForm">로그인</a>
 					<a href="${path}/member/joinForm">회원가입</a>
@@ -51,6 +52,12 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		$(function (){ // 화면이 로드가 완료되면
+			$.ajax({
+				url: "${path}/ajax/logo",
+				success: function(data) {
+					$("#getimg").html(data);
+				}
+			})
 			exchangeRate();
 			$.ajax({
 				url : "${path}/ajax/select",
