@@ -17,7 +17,6 @@ a{
 th:last-child, td:last-child {
     white-space: nowrap;
 }
-}
 </style>
 </head>
 <body>
